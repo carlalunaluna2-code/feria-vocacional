@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Orientación Vocacional - Feria de Ciencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #008000;
+            color: white;
+            padding: 20px;
+        }
+        h1 span {
+            color: #ff69b4;
+        }
+        section {
+            margin: 20px;
+        }
+        .question {
+            background-color: #f8f8f8;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px auto;
+            width: 90%;
+            max-width: 600px;
+        }
+        button {
+            background-color: #008000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff69b4;
+        }
+        #result {
+            display: none;
+            background-color: #ffebf0;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+        }
+        footer {
+            margin-top: 30px;
+            background-color: #008000;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Test de Orientación Vocacional <br><span>Feria de Ciencias 2025</span></h1>
+        <p>Colegio Gobernador Juan José Silva N°54</p>
+    </header>
+
+    <section id="quiz">
+        <div class="question" data-type="arte">
+            <p>1. Te gusta expresarte mediante el dibujo, la música o la escritura.</p>
+            <button onclick="nextQuestion('arte')">Sí</button>
+            <button onclick="nextQuestion('otra')">No</button>
+        </div>
+        <div class="question" data-type="ciencias" style="display:none;">
+            <p>2. Te interesa descubrir cómo funciona el cuerpo humano o la naturaleza.</p>
+            <button onclick="nextQuestion('ciencias')">Sí</button>
+            <button onclick="nextQuestion('otra')">No</button>
+        </div>
+        <div class="question" data-type="tecnologia" style="display:none;">
+            <p>3. Disfrutás de usar computadoras, diseñar cosas o resolver problemas técnicos.</p>
+            <button onclick="nextQuestion('tecnologia')">Sí</button>
+            <button onclick="nextQuestion('otra')">No</button>
+        </div>
+        <div class="question" data-type="sociales" style="display:none;">
+            <p>4. Te gusta ayudar a otros, enseñar o comunicarte con la gente.</p>
+            <button onclick="nextQuestion('sociales')">Sí</button>
+            <button onclick="nextQuestion('otra')">No</button>
+        </div>
+        <div class="question" data-type="economia" style="display:none;">
+            <p>5. Te interesa el dinero, los negocios o la organización de proyectos.</p>
+            <button onclick="nextQuestion('economia')">Sí</button>
+            <button onclick="nextQuestion('otra')">No</button>
+        </div>
+    </section>
+
+    <section id="result">
+        <h2>Tu perfil vocacional es:</h2>
+        <p id="resultText"></p>
+        <button onclick="location.reload()">Volver a empezar</button>
+    </section>
+
+    <footer>
+        <p>Integrantes: Verandi Carla - Ravano Isabella - Ramirez Catalina - Kunz Aitho</p>
+    </footer>
+
+    <script>
+        let current = 0;
+        const questions = document.querySelectorAll('.question');
+        const resultDiv = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+        const scores = { arte: 0, ciencias: 0, tecnologia: 0, sociales: 0, economia: 0 };
+
+        function nextQuestion(type) {
+            if (type !== 'otra') scores[type]++;
+            questions[current].style.display = 'none';
+            current++;
+            if (current < questions.length) {
+                questions[current].style.display = 'block';
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            let best = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            let text = '';
+            switch(best) {
+                case 'arte': text = 'Perfil Artístico 🎨: te destacás en la creatividad, la expresión y la imaginación.'; break;
+                case 'ciencias': text = 'Perfil Científico 🔬: te interesa investigar, descubrir y entender cómo funciona el mundo.'; break;
+                case 'tecnologia': text = 'Perfil Tecnológico 💻: te atraen los desafíos lógicos y las soluciones prácticas.'; break;
+                case 'sociales': text = 'Perfil Social 🤝: te gusta trabajar con personas, comunicarte y ayudar a los demás.'; break;
+                case 'economia': text = 'Perfil Emprendedor 💼: te interesan los negocios, la gestión y los resultados concretos.'; break;
+            }
+            resultText.textContent = text;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
